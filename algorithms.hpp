@@ -139,35 +139,6 @@ template <class T> void RandomMutation::mutation(T &rep) {
 template <class T>
 void UniformCrossover::crossover(const T &rep1, const T &rep2, T &result) {
   if (rep1 != rep2) {
-    // #ifdef PAR
-    //     auto f = [&result, &rep1, &rep2](int start, int end) {
-    //       auto rep1_ = rep1.begin() + start;
-    //       auto rep2_ = rep2.begin() + start;
-    //       auto res = result.begin() + start;
-    //       for (int i = 0; i < end - start; i++) {
-    //         if (random_choice()) {
-    //           *res = *rep1_;
-    //         } else {
-    //           *res = *rep2_;
-    //         }
-    //         ++rep1_;
-    //         ++rep2_;
-    //         ++res;
-    //       }
-    //     };
-
-    //     auto k = rep1.get_size();
-    //     std::thread t1(f, 0, k / 4);
-    //     std::thread t2(f, k / 4, k / 2);
-    //     std::thread t3(f, k / 2, 3 * k / 4);
-    //     std::thread t4(f, 3 * k / 4, k);
-
-    //     t1.join();
-    //     t2.join();
-    //     t3.join();
-    //     t4.join();
-    // #else
-
     auto it_rep1 = rep1.begin();
     auto it_rep2 = rep2.begin();
     auto it_result = result.begin();

@@ -3,11 +3,7 @@
 
 #include <algorithm>
 #include <cmath>
-#include <functional>
 #include <memory>
-#include <mutex>
-#include <random>
-#include <thread>
 
 #include "config.hpp"
 #include "problem.hpp"
@@ -155,7 +151,7 @@ void UniformCrossover::crossover(const T &rep1, const T &rep2, T &result) {
       it_rep2++;
       it_result++;
     }
-    // #endif
+    
   } else {
     result = rep1;
   }

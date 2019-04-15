@@ -3,9 +3,7 @@
 
 #include <algorithm>
 #include <iostream>
-#include <iterator>
 #include <mutex>
-#include <thread>
 #include <vector>
 
 #include "algorithms.hpp"
@@ -37,29 +35,29 @@ public:
   dna(int n) : rep(T(n, false)), fitness(0), feasible(false) {}
   dna(const T &_rep) : rep(_rep), fitness(0), feasible(false) {}
 
-  dna(const dna_type &adn) {
-    rep = adn.rep;
-    fitness = adn.fitness;
-    feasible = adn.feasible;
+  dna(const dna_type &dna) {
+    rep = dna.rep;
+    fitness = dna.fitness;
+    feasible = dna.feasible;
   }
 
-  dna(dna_type &&adn) {
-    rep = std::move(adn.rep);
-    fitness = std::move(adn.fitness);
-    feasible = std::move(adn.feasible);
+  dna(dna_type &&dna) {
+    rep = std::move(dna.rep);
+    fitness = std::move(dna.fitness);
+    feasible = std::move(dna.feasible);
   }
 
-  dna &operator=(const dna_type &adn) {
-    this->rep = adn.rep;
-    this->fitness = adn.fitness;
-    this->feasible = adn.feasible;
+  dna &operator=(const dna_type &dna) {
+    this->rep = dna.rep;
+    this->fitness = dna.fitness;
+    this->feasible = dna.feasible;
     return *this;
   }
 
-  dna &operator=(dna_type &&adn) {
-    this->rep = std::move(adn.rep);
-    this->fitness = std::move(adn.fitness);
-    this->feasible = std::move(adn.feasible);
+  dna &operator=(dna_type &&dna) {
+    this->rep = std::move(dna.rep);
+    this->fitness = std::move(dna.fitness);
+    this->feasible = std::move(dna.feasible);
     return *this;
   }
 
@@ -138,8 +136,8 @@ public:
     return dna_type(child_rep);
   }
 
-  friend std::ostream &operator<<(std::ostream &os, const dna_type &adn) {
-    for (const auto elem : adn.get_rep()) {
+  friend std::ostream &operator<<(std::ostream &os, const dna_type &dna) {
+    for (const auto elem : dna.get_rep()) {
       os << elem;
     }
     return os;
@@ -154,27 +152,27 @@ public:
 };
 
 template <class T, class cross_op, class mut_op>
-bool operator<(const dna<T, cross_op, mut_op> &adn1,
-               const dna<T, cross_op, mut_op> &adn2) noexcept {
-  return adn1.get_fitness() < adn2.get_fitness();
+bool operator<(const dna<T, cross_op, mut_op> &dna1,
+               const dna<T, cross_op, mut_op> &dna2) noexcept {
+  return dna1.get_fitness() < dna2.get_fitness();
 }
 
 template <class T, class cross_op, class mut_op>
-bool operator>(const dna<T, cross_op, mut_op> &adn1,
-               const dna<T, cross_op, mut_op> &adn2) noexcept {
-  return adn1.get_fitness() > adn2.get_fitness();
+bool operator>(const dna<T, cross_op, mut_op> &dna1,
+               const dna<T, cross_op, mut_op> &dna2) noexcept {
+  return dna1.get_fitness() > dna2.get_fitness();
 }
 
 template <class T, class cross_op, class mut_op>
-bool operator==(const dna<T, cross_op, mut_op> &adn1,
-                const dna<T, cross_op, mut_op> &adn2) {
-  return adn1.get_rep() == adn2.get_rep();
+bool operator==(const dna<T, cross_op, mut_op> &dna1,
+                const dna<T, cross_op, mut_op> &dna2) {
+  return dna1.get_rep() == dna2.get_rep();
 }
 
 template <class T, class cross_op, class mut_op>
-bool operator!=(const dna<T, cross_op, mut_op> &adn1,
-                const dna<T, cross_op, mut_op> &adn2) {
-  return !(adn1.get_rep() == adn2.get_rep());
+bool operator!=(const dna<T, cross_op, mut_op> &dna1,
+                const dna<T, cross_op, mut_op> &dna2) {
+  return !(dna1.get_rep() == dna2.get_rep());
 }
 
 static const float costs_bound =

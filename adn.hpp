@@ -5,18 +5,20 @@
 #include <iostream>
 #include <mutex>
 #include <vector>
+#include <climits>
 
 #include "algorithms.hpp"
 #include "config.hpp"
-#include "matrix.hpp"
 #include "problem.hpp"
-#include "random_utils.hpp"
 #include "syntax_tree.hpp"
 
-template <class T = std::vector<bool>, class cross_op = UniformCrossover,
+template <class T = std::vector<bool>,
+	  class cross_op = UniformCrossover,
           class mut_op = RandomMutation>
 class dna {
+  
 private:
+  
 #ifdef PAR
   mutable std::mutex dna_mutex;
 #endif
@@ -25,6 +27,7 @@ private:
   mutable bool feasible;
 
 public:
+  
   typedef dna<T, cross_op, mut_op> dna_type;
   typedef typename T::iterator iterator;
   typedef typename T::const_iterator const_iterator;

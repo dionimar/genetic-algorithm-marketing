@@ -1,21 +1,11 @@
-#include <algorithm>
 #include <cassert>
-#include <chrono>
-#include <climits>
-#include <cmath>
 #include <iostream>
-#include <memory>
-#include <random>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string>
-#include <thread>
 #include <vector>
 
-#include "adn.hpp"
 #include "syntax_tree.hpp"
 #include "matrix.hpp"
-#include "random_utils.hpp"
 #include "generate_problem.hpp"
 
 std::vector<std::vector<float> > generate_probabilities(int dim1, int dim2) {

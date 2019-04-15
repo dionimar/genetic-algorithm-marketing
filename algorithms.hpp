@@ -3,7 +3,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <memory>
 
 #include "config.hpp"
 #include "problem.hpp"

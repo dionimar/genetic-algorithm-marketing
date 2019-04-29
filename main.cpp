@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
   std::srand(std::time(nullptr));
 #endif
 
-// print_problem(20, 200, 10, 1, 1000);
+  // print_problem(20, 50, 5, 1, 1000);
 #ifdef TESTING
   test_group();
 #else
@@ -62,18 +62,18 @@ int main(int argc, char **argv) {
   // // t4.join();
   // // t5.join();
 
-  std::cout << "----------------GREEDY SOLUTION-------------------------------"
-            << std::endl;
+  // std::cout << "----------------GREEDY SOLUTION-------------------------------"
+  //           << std::endl;
 #ifdef PAPO
-  auto x = greedy_papo(restrictions, min_impressions, prob);
+  // auto x = greedy_papo(restrictions, min_impressions, prob);
 #endif
 #ifdef APO
-  auto x = greedy_apo(media, restrictions, min_impressions, costs);
+  // auto x = greedy_apo(media, restrictions, min_impressions, costs);
 #endif
-  auto greedy_adn = dna<std::vector<bool> >(x);
-  greedy_adn.comp_fitness();
+  // auto greedy_adn = dna<std::vector<bool> >(x);
+  // greedy_adn.comp_fitness();
 
-  greedy_adn.show_info();
+  // greedy_adn.show_info();
 #endif
 
   return 0;

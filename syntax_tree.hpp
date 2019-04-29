@@ -155,7 +155,8 @@ bool prob_consis(const Node &nod, const std::vector<float> &prob,
   }
   
   if (nod.excl.size() > 0) {
-    bool T = true;
+    //bool T = true;
+    bool T = watching_Ad(nod, solution, prob);
     for (auto &&term : nod.excl) {
       T = T && prob_consis(*term, prob, solution);
     }

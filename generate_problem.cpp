@@ -1,11 +1,21 @@
+#include <algorithm>
 #include <cassert>
+#include <chrono>
+#include <climits>
+#include <cmath>
 #include <iostream>
+#include <memory>
+#include <random>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <thread>
 #include <vector>
 
+#include "adn.hpp"
 #include "syntax_tree.hpp"
 #include "matrix.hpp"
+#include "random_utils.hpp"
 #include "generate_problem.hpp"
 
 std::vector<std::vector<float> > generate_probabilities(int dim1, int dim2) {
@@ -131,10 +141,10 @@ void print_problem(int _segments, int _media, int depth, int bound_n,
   // 	V = V && prob_consis(_restriction_trees.at(i),
   // 			     _probabilities.at(i), sol);
   // }
-  bool T = compare(comp_terms, _restrictions); // && V;
+  bool T = compare(comp_terms, _restrictions);// && V;
   while (T == false) {
-    //_restriction_trees = generate_restriction_trees(_segments, depth,
-    //_events);
+    // _restriction_trees = generate_restriction_trees(_segments, depth,
+    // _events);
     // bool V = true;
     // for(int i = 0; i < _restriction_trees.size(); i++){
     //     V = V && prob_consis(_restriction_trees.at(i),
@@ -145,7 +155,7 @@ void print_problem(int _segments, int _media, int depth, int bound_n,
       comp_terms.at(i) =
           watching_Ad(_restriction_trees.at(i), x, _probabilities.at(i));
     }
-    T = compare(comp_terms, _restrictions); // && V;
+    T = compare(comp_terms, _restrictions);// && V;
   }
   std::cout << std::endl;
   std::cout << std::endl;

@@ -3,7 +3,7 @@
 
 #define PAR
 
-// #define TESTING
+#define TESTING
 #ifdef TESTING
 #define MAX_TEST_ITERATIONS 100
 #endif
@@ -19,7 +19,7 @@
 // Take the greedy solution in first population
 //#define GREEDY_INIT
 #define MUTATION_RATE 0.1
-#define POPULATION_SIZE 500
+#define POPULATION_SIZE 200
 #define POOL_SIZE 200
 #define ELLITISTS 20 // Number of individuals to keep for next generation
 #define MAX_ITERATIONS 250

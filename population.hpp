@@ -16,7 +16,8 @@
 #include "greedy.hpp"
 #include "random_utils.hpp"
 
-template <class dna_type, class select_op = RandomSelection,
+template <class dna_type,
+	  class select_op = RandomSelection,
           class replace_op = StandardReplacement>
 class population {
 private:

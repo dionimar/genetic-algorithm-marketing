@@ -15,9 +15,9 @@
 #include "random_utils.hpp"
 #include "syntax_tree.hpp"
 
-template <class T = std::vector<bool>, class cross_op = UniformCrossover,
-          class mut_op = RandomMutation>
-class dna {
+template <class T = std::vector<bool>, class CrossOp = UniformCrossover,
+          class MutOp = RandomMutation>
+class Dna {
 private:
 #ifdef PAR
   mutable std::mutex dna_mutex;
@@ -27,43 +27,43 @@ private:
   mutable bool feasible;
 
 public:
-  typedef dna<T, cross_op, mut_op> dna_type;
+  typedef Dna<T, CrossOp, MutOp> Dna_type;
   typedef typename T::iterator iterator;
   typedef typename T::const_iterator const_iterator;
   typedef typename T::value_type &value;
   typedef typename T::value_type const_value;
 
-  dna() : rep(T()), fitness(0), feasible(false) {}
-  dna(int n) : rep(T(n, false)), fitness(0), feasible(false) {}
-  dna(const T &_rep) : rep(_rep), fitness(0), feasible(false) {}
+  Dna() : rep(T()), fitness(0), feasible(false) {}
+  Dna(int n) : rep(T(n, false)), fitness(0), feasible(false) {}
+  Dna(const T &_rep) : rep(_rep), fitness(0), feasible(false) {}
 
-  dna(const dna_type &adn) {
+  Dna(const Dna_type &adn) {
     rep = adn.rep;
     fitness = adn.fitness;
     feasible = adn.feasible;
   }
 
-  dna(dna_type &&adn) {
+  Dna(Dna_type &&adn) {
     rep = std::move(adn.rep);
     fitness = std::move(adn.fitness);
     feasible = std::move(adn.feasible);
   }
 
-  dna &operator=(const dna_type &adn) {
+  Dna &operator=(const Dna_type &adn) {
     this->rep = adn.rep;
     this->fitness = adn.fitness;
     this->feasible = adn.feasible;
     return *this;
   }
 
-  dna &operator=(dna_type &&adn) {
+  Dna &operator=(Dna_type &&adn) {
     this->rep = std::move(adn.rep);
     this->fitness = std::move(adn.fitness);
     this->feasible = std::move(adn.feasible);
     return *this;
   }
 
-  ~dna() = default;
+  ~Dna() = default;
 
   iterator begin() noexcept {
 #ifdef PAR
@@ -81,8 +81,7 @@ public:
 
   const_iterator begin() const noexcept { return rep.begin(); }
 
-  const_iterator end() const noexcept {
-    return rep.end(); }
+  const_iterator end() const noexcept { return rep.end(); }
 
   value at(int i) {
 #ifdef PAR
@@ -128,17 +127,17 @@ public:
 #ifdef PAR
     std::lock_guard<std::mutex> guard(dna_mutex);
 #endif
-    mut_op::mutation(rep);
+    MutOp::mutation(rep);
   }
 
-  dna_type crossover(const dna_type &other) const {
+  Dna_type crossover(const Dna_type &other) const {
     // crossover acces rep from iterators, wich are already thread safe
-    dna_type child_rep = other;
-    cross_op::crossover(*this, other, child_rep);
-    return dna_type(child_rep);
+    Dna_type child_rep = other;
+    CrossOp::crossover(*this, other, child_rep);
+    return Dna_type(child_rep);
   }
 
-  friend std::ostream &operator<<(std::ostream &os, const dna_type &adn) {
+  friend std::ostream &operator<<(std::ostream &os, const Dna_type &adn) {
     for (const auto elem : adn.get_rep()) {
       os << elem;
     }
@@ -153,27 +152,27 @@ public:
   static void print_config();
 };
 
-template <class T, class cross_op, class mut_op>
-bool operator<(const dna<T, cross_op, mut_op> &adn1,
-               const dna<T, cross_op, mut_op> &adn2) noexcept {
+template <class T, class CrossOp, class MutOp>
+bool operator<(const Dna<T, CrossOp, MutOp> &adn1,
+               const Dna<T, CrossOp, MutOp> &adn2) noexcept {
   return adn1.get_fitness() < adn2.get_fitness();
 }
 
-template <class T, class cross_op, class mut_op>
-bool operator>(const dna<T, cross_op, mut_op> &adn1,
-               const dna<T, cross_op, mut_op> &adn2) noexcept {
+template <class T, class CrossOp, class MutOp>
+bool operator>(const Dna<T, CrossOp, MutOp> &adn1,
+               const Dna<T, CrossOp, MutOp> &adn2) noexcept {
   return adn1.get_fitness() > adn2.get_fitness();
 }
 
-template <class T, class cross_op, class mut_op>
-bool operator==(const dna<T, cross_op, mut_op> &adn1,
-                const dna<T, cross_op, mut_op> &adn2) {
+template <class T, class CrossOp, class MutOp>
+bool operator==(const Dna<T, CrossOp, MutOp> &adn1,
+                const Dna<T, CrossOp, MutOp> &adn2) {
   return adn1.get_rep() == adn2.get_rep();
 }
 
-template <class T, class cross_op, class mut_op>
-bool operator!=(const dna<T, cross_op, mut_op> &adn1,
-                const dna<T, cross_op, mut_op> &adn2) {
+template <class T, class CrossOp, class MutOp>
+bool operator!=(const Dna<T, CrossOp, MutOp> &adn1,
+                const Dna<T, CrossOp, MutOp> &adn2) {
   return !(adn1.get_rep() == adn2.get_rep());
 }
 
@@ -181,15 +180,15 @@ static const float costs_bound =
     (*std::max_element(costs.begin(), costs.end())) * (costs.size());
 
 #ifdef PAPO
-template <class T, class cross_op, class mut_op>
-void dna<T, cross_op, mut_op>::comp_fitness() const {
+template <class T, class CrossOp, class MutOp>
+void Dna<T, CrossOp, MutOp>::comp_fitness() const {
   fitness = scalar_prod(costs, get_rep());
   auto computed_terms = std::vector<float>(restrictions.size());
-  
+
   for (size_t i = 0; i < restrictions.size(); i++) {
     computed_terms.at(i) = watching_Ad(restrictions.at(i), *this, prob.at(i));
   }
-  
+
   feasible = compare(computed_terms, min_impressions);
   if (!feasible) {
 #ifdef USE_OF_INFINITY
@@ -208,13 +207,13 @@ void dna<T, cross_op, mut_op>::comp_fitness() const {
 #endif
 
 #ifdef APO
-template <class T, class cross_op, class mut_op>
-void dna<T, cross_op, mut_op>::comp_fitness() const {
+template <class T, class CrossOp, class MutOp>
+void Dna<T, CrossOp, MutOp>::comp_fitness() const {
   auto repr = get_rep();
   fitness = scalar_prod(costs, repr);
   auto Ax = restrictions * repr;
   feasible = compare(Ax, min_impressions);
-  
+
   if (!feasible) {
     auto it_Ax = Ax.begin();
     auto it_res = min_impressions.begin();
@@ -229,16 +228,16 @@ void dna<T, cross_op, mut_op>::comp_fitness() const {
 }
 #endif
 
-template <class T, class cross_op, class mut_op>
-void dna<T, cross_op, mut_op>::print_config() {
-  std::cout << "--------------- dna_type Parameters ---------------"
+template <class T, class CrossOp, class MutOp>
+void Dna<T, CrossOp, MutOp>::print_config() {
+  std::cout << "--------------- Dna_type Parameters ---------------"
             << std::endl;
   std::cout << std::endl;
   std::cout << "    Crossover Operator = ";
-  cross_op::print();
+  CrossOp::print();
   std::cout << std::endl;
   std::cout << "     Mutation Operator = ";
-  mut_op::print();
+  MutOp::print();
   std::cout << std::endl;
   std::cout << "  Mutation Probability = " << MUTATION_RATE << std::endl;
   std::cout << std::endl;

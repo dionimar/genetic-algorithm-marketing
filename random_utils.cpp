@@ -12,7 +12,11 @@ std::random_device r_device2;
 std::mt19937 gen2(r_device2());
 
 std::random_device generator;
+#ifdef MUTATION_RATE
 std::bernoulli_distribution distribution(MUTATION_RATE);
+#else
+std::bernoulli_distribution distribution(0.5);
+#endif
 
 std::random_device generator2;
 std::bernoulli_distribution distribution2(0.5);

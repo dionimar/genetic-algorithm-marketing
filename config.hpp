@@ -3,7 +3,7 @@
 
 #define PAR
 
-#define TESTING
+//#define TESTING
 #ifdef TESTING
 #define MAX_TEST_ITERATIONS 100
 #endif

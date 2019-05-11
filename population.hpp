@@ -16,39 +16,41 @@
 #include "greedy.hpp"
 #include "random_utils.hpp"
 
-template <class dna_type,
-	  class select_op = RandomSelection,
-          class replace_op = StandardReplacement>
-class population {
+template <class DnaType, class SelectOp = RandomSelection,
+          class ReplaceOp = StandardReplacement>
+class Population {
 private:
 #ifdef PAR
   mutable std::mutex pop_mutex;
 #endif
   size_t population_size;
-  std::vector<dna_type> members;
+  std::vector<DnaType> members;
   int ellitists;
   int generation_number;
   mutable float entropy;
 
 public:
-  static dna_type memb_type; // Tricky member for decltype usage
+  static DnaType memb_type; // Tricky member for decltype usage
   mutable size_t pool_size;
-  mutable std::vector<dna_type> pool;
+  mutable std::vector<DnaType> pool;
 
-  typedef typename std::vector<dna_type>::iterator iterator;
-  typedef typename std::vector<dna_type>::const_iterator const_iterator;
-  typedef typename std::vector<dna_type>::value_type &value;
-  typedef typename std::vector<dna_type>::value_type const_value;
+  typedef typename std::vector<DnaType>::iterator iterator;
+  typedef typename std::vector<DnaType>::const_iterator const_iterator;
+  typedef typename std::vector<DnaType>::value_type &value;
+  typedef typename std::vector<DnaType>::value_type const_value;
 
-  population() noexcept
-      : population_size(0), pool_size(0), members(std::vector<dna_type>()),
-        pool(std::vector<dna_type>()), ellitists(0), generation_number(0),
-        entropy(0) {}
+  Population() noexcept : population_size(0),
+                          pool_size(0),
+                          members(std::vector<DnaType>()),
+                          pool(std::vector<DnaType>()),
+                          ellitists(0),
+                          generation_number(0),
+                          entropy(0) {}
 
-  population(int _length_adn, size_t _population_size, size_t _pool_size,
+  Population(int _length_adn, size_t _population_size, size_t _pool_size,
              int _ellitists);
 
-  population(const population &pop) {
+  Population(const Population &pop) {
     population_size = pop.population_size;
     pool_size = pop.pool_size;
     members = pop.members;
@@ -58,7 +60,7 @@ public:
     entropy = pop.entropy;
   }
 
-  population(population &&pop) {
+  Population(Population &&pop) {
     population_size = std::move(pop.population_size);
     pool_size = std::move(pop.pool_size);
     members = std::move(pop.members);
@@ -68,8 +70,7 @@ public:
     entropy = std::move(pop.entropy);
   }
 
-  population &
-  operator=(const population<dna_type, select_op, replace_op> &pop) {
+  Population &operator=(const Population<DnaType, SelectOp, ReplaceOp> &pop) {
     this->population_size = pop.population_size;
     this->pool_size = pop.pool_size;
     this->members = pop.members;
@@ -80,7 +81,7 @@ public:
     return *this;
   }
 
-  population &operator=(population<dna_type, select_op, replace_op> &&pop) {
+  Population &operator=(Population<DnaType, SelectOp, ReplaceOp> &&pop) {
     this->population_size = std::move(pop.population_size);
     this->pool_size = std::move(pop.pool_size);
     this->members = std::move(pop.members);
@@ -91,7 +92,7 @@ public:
     return *this;
   }
 
-  ~population() = default;
+  ~Population() = default;
 
   iterator begin() noexcept {
 #ifdef PAR
@@ -120,7 +121,7 @@ public:
 
   const_value at(int i) const { return members.at(i); }
 
-  std::vector<dna_type> get_members() {
+  std::vector<DnaType> get_members() {
 #ifdef PAR
     std::lock_guard<std::mutex> guard(pop_mutex);
 #endif
@@ -133,29 +134,28 @@ public:
   int get_generation_number() const noexcept { return generation_number; }
   float get_entropy() const noexcept { return entropy; }
 
-  dna_type get_best() const {
+  DnaType get_best() const {
     if (members.size() > 0) {
-      auto feasibles = std::vector<dna_type>(0);
-      for(auto&& x : members){
-	if (x.get_feasible()) {
-	    feasibles.push_back(x);
-	}
+      auto feasibles = std::vector<DnaType>(0);
+      for (auto &&x : members) {
+        if (x.get_feasible()) {
+          feasibles.push_back(x);
+        }
       }
 
       if (feasibles.size() != 0) {
-	return *std::min_element(feasibles.begin(), feasibles.end());
+        return *std::min_element(feasibles.begin(), feasibles.end());
       } else
-	return dna_type();
+        return DnaType();
     } else
-      return dna_type();
+      return DnaType();
   }
 
-  dna_type get_worst() const {
+  DnaType get_worst() const {
     if (members.size() > 0) {
-      // return members.back();
       return *std::max_element(members.begin(), members.end());
     } else
-      return dna_type();
+      return DnaType();
   }
 
   void sort() {
@@ -169,25 +169,25 @@ public:
   }
 
   void next_generation() {
-    select_op::construct_pool(*this);
+    SelectOp::construct_pool(*this);
     // partial sort if ellitism is selected; we need to avoid
     // replacement over this members
     if (ellitists > 0) {
       std::partial_sort(members.begin(), members.begin() + ellitists,
                         members.end());
     }
-    
+
 #ifdef PAR
     auto f1 = [this](int initial, int final) {
       for (int i = initial; i < final; i++) {
-        auto membs = select_op::selection(*this);
+        auto membs = SelectOp::selection(*this);
         auto new_memb = membs.first.crossover(membs.second);
         new_memb.mutate();
         new_memb.comp_fitness();
-        replace_op::replace(new_memb, *this, i);
+        ReplaceOp::replace(new_memb, *this, i);
       }
     };
-    
+
     std::thread t1(f1, ellitists, population_size / 4);
     std::thread t2(f1, population_size / 4, population_size / 2);
     std::thread t3(f1, population_size / 2, 3 * population_size / 4);
@@ -196,14 +196,14 @@ public:
     t2.join();
     t3.join();
     t4.join();
-    
+
 #else
     for (int i = ellitists; i < population_size; i++) {
-      auto membs = select_op::selection(*this);
+      auto membs = SelectOp::selection(*this);
       auto new_memb = membs.first.crossover(membs.second);
       new_memb.mutate();
       new_memb.comp_fitness();
-      replace_op::replace(new_memb, *this, i);
+      ReplaceOp::replace(new_memb, *this, i);
     }
 #endif
     generation_number++;
@@ -213,27 +213,15 @@ public:
 #ifdef PAR
     std::lock_guard<std::mutex> guard(pop_mutex);
 #endif
-    // float count = 0;
-    
-    // for (auto it = members.begin(); it != members.end(); ++it) {
-    //   float pi = 0;
-    //   for (auto it2 = members.begin(); it2 != members.end(); ++it2) {
-    //     if (*it == *it2) {
-    //       pi++;
-    //     }
-    //   }
-    //   pi /= population_size;
-    //   count += pi * std::log(pi);
-    // }
-    
-    // entropy = -count;
     int count = 0;
-    for(auto it = members.begin(); it != members.end()-1; ++it){
-      for(auto it2 = it+1; it2 != members.end(); ++it2){
-	count += hamming_d(*it, *it2);
+    
+    for (auto it = members.begin(); it != members.end() - 1; ++it) {
+      for (auto it2 = it + 1; it2 != members.end(); ++it2) {
+        count += hamming_d(*it, *it2);
       }
     }
-    entropy = 2*count/(population_size*(population_size-1));
+    
+    entropy = 2 * count / (population_size * (population_size - 1));
   }
 
   float average_fitness() const {
@@ -241,11 +229,11 @@ public:
     std::lock_guard<std::mutex> guard(pop_mutex);
 #endif
     float fit = 0;
-    
+
     for (auto it = members.begin(); it != members.end(); ++it) {
       fit += it->get_fitness();
     }
-    
+
     return fit / population_size;
   }
 
@@ -261,7 +249,7 @@ public:
         count++;
       }
     }
-    
+
     return 100 * count / total;
   }
 
@@ -273,7 +261,7 @@ public:
     auto bests = std::vector<float>(0);
     auto entropys = std::vector<float>(0);
     auto feasible_p = std::vector<float>(0);
-    
+
     while (max_iterations > 0) {
       next_generation();
       // compute_entropy();
@@ -282,13 +270,13 @@ public:
       // entropys.push_back(get_entropy());
       // feasible_p.push_back(feasible_percentage());
     }
-    
+
     // bests.push_back(get_best().get_fitness());
     data_fitness.push_back(bests);
     // data_entropy.push_back(entropys);
     // data_feasibility.push_back(feasible_p);
   }
-  
+
 #else
   void evolve(int max_iterations) {
     assert(max_iterations > 0);
@@ -307,10 +295,10 @@ public:
     std::cout << "             Pool size = " << pool_size << std::endl;
     std::cout << "              Elitists = " << ellitists << std::endl;
     std::cout << "      Selection Method = ";
-    select_op::print();
+    SelectOp::print();
     std::cout << std::endl;
     std::cout << "           Replacement = ";
-    replace_op::print();
+    ReplaceOp::print();
     std::cout << std::endl;
     std::cout << "       Max. Iterations = " << MAX_ITERATIONS << std::endl;
     std::cout << "      Initialized from = ";
@@ -320,7 +308,7 @@ public:
     std::cout << "random" << std::endl;
 #endif
     std::cout << std::endl;
-    dna_type::print_config();
+    DnaType::print_config();
     std::cout << "---------------- Best Member -----------------" << std::endl;
     std::cout << std::endl;
     std::cout << "         representation: " << std::endl;
@@ -339,7 +327,7 @@ public:
     std::cout << std::endl;
   }
 
-  friend std::ostream &operator<<(std::ostream &os, const population &pop) {
+  friend std::ostream &operator<<(std::ostream &os, const Population &pop) {
     for (const auto &elem : pop.members) {
       os << elem;
       os << "    fitness: " << elem.get_fitness();
@@ -349,33 +337,33 @@ public:
   }
 };
 
-template <class dna_type, class select_op, class replace_op>
-population<dna_type, select_op, replace_op>::population(int _length_adn,
-                                                        size_t _population_size,
-                                                        size_t _pool_size,
-                                                        int _ellitists)
+template <class DnaType, class SelectOp, class ReplaceOp>
+Population<DnaType, SelectOp, ReplaceOp>::Population(int _length_adn,
+                                                     size_t _population_size,
+                                                     size_t _pool_size,
+                                                     int _ellitists)
     : population_size(_population_size),
-      members(std::vector<dna_type>(population_size, dna_type(_length_adn))),
+      members(std::vector<DnaType>(population_size, DnaType(_length_adn))),
       ellitists(_ellitists), generation_number(0), entropy(0),
       pool_size(_pool_size),
-      pool(std::vector<dna_type>(0, dna_type(_length_adn))) {
+      pool(std::vector<DnaType>(0, DnaType(_length_adn))) {
 
   assert(population_size > 0);
   assert(pool_size > 0);
   assert(ellitists >= 0);
 
   if (pool_size <= population_size) {
-    pool = std::vector<dna_type>(pool_size, dna_type(_length_adn));
+    pool = std::vector<DnaType>(pool_size, DnaType(_length_adn));
   } else {
-    pool = std::vector<dna_type>(population_size, dna_type(_length_adn));
+    pool = std::vector<DnaType>(population_size, DnaType(_length_adn));
   }
-  
+
   auto it_member = members.begin();
 #ifdef GREEDY_INIT
 #ifdef PAPO
-  *it_member = dna_type(greedy_papo(restrictions, min_impressions, prob));
+  *it_member = DnaType(greedy_papo(restrictions, min_impressions, prob));
 #else
-  *it_member = dna_type(greedy_apo(media, restrictions, min_impressions, prob));
+  *it_member = DnaType(greedy_apo(media, restrictions, min_impressions, prob));
 #endif
 #else
   // Ensure first member is set to 1's, so if it's not feasible,
@@ -385,7 +373,7 @@ population<dna_type, select_op, replace_op>::population(int _length_adn,
   it_member->comp_fitness();
   assert(it_member->get_feasible());
   ++it_member;
-  
+
   for (; it_member != members.end(); ++it_member) {
 #ifdef ONES_INITIALIZATION
     it_member->init_set_ones();

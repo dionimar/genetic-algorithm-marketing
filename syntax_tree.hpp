@@ -10,9 +10,9 @@ class Syntax_Tree;
 
 class Node {
 private:
-  std::vector<std::shared_ptr<Node>> indep;
-  std::vector<std::shared_ptr<Node>> excl;
-  std::vector<std::shared_ptr<Node>> incl;
+  std::vector< std::shared_ptr<Node> > indep;
+  std::vector< std::shared_ptr<Node> > excl;
+  std::vector< std::shared_ptr<Node> > incl;
   int event_id;
 
 public:
@@ -24,9 +24,9 @@ public:
   Node &operator=(Node &&nod) = default;
   ~Node();
 
-  void set_incl(const std::vector<std::shared_ptr<Node>> &vec);
-  void set_excl(const std::vector<std::shared_ptr<Node>> &vec);
-  void set_indep(const std::vector<std::shared_ptr<Node>> &vec);
+  void set_incl(const std::vector< std::shared_ptr<Node> > &vec);
+  void set_excl(const std::vector< std::shared_ptr<Node> > &vec);
+  void set_indep(const std::vector< std::shared_ptr<Node> > &vec);
   void excl_push(const std::shared_ptr<Node> &nod);
   void indep_push(const std::shared_ptr<Node> &nod);
 
@@ -48,13 +48,13 @@ public:
   friend bool operator==(const Node &nod1, const Node &nod2);
   friend bool operator!=(const Node &nod1, const Node &nod2);
 
-  template <class ADN>
-  friend float watching_Ad(const Node &root, const ADN &solution,
+  template <class Dna>
+  friend float watching_Ad(const Node &root, const Dna &solution,
                            const std::vector<float> &probabilities);
 
-  template <class ADN>
+  template <class Dna>
   friend bool prob_consis(const Node &nod, const std::vector<float> &prob,
-                          const ADN &solution);
+                          const Dna &solution);
 };
 
 bool operator==(const Node &nod1, const Node &nod2);
@@ -73,9 +73,9 @@ public:
   Syntax_Tree &operator=(Syntax_Tree &&t) = default;
   ~Syntax_Tree();
 
-  void set_incl(const std::vector<std::shared_ptr<Node> > &vec);
-  void set_excl(const std::vector<std::shared_ptr<Node> > &vec);
-  void set_indep(const std::vector<std::shared_ptr<Node> > &vec);
+  void set_incl(const std::vector< std::shared_ptr<Node> > &vec);
+  void set_excl(const std::vector< std::shared_ptr<Node> > &vec);
+  void set_indep(const std::vector< std::shared_ptr<Node> > &vec);
   void excl_push(const std::shared_ptr<Node> &nod);
   void indep_push(const std::shared_ptr<Node> &nod);
 };
@@ -83,7 +83,6 @@ public:
 bool operator==(const Syntax_Tree &tree1, const Syntax_Tree &tree2);
 bool operator!=(const Syntax_Tree &tree1, const Syntax_Tree &tree2);
 
-// Constructor functions
 Syntax_Tree cons_event(int _event_id);
 Syntax_Tree cons_incl(const Syntax_Tree &tree1, int _event_id);
 Syntax_Tree cons_excl(const Syntax_Tree &tree1, const Syntax_Tree &tree2);
@@ -100,8 +99,8 @@ bool parse(const Syntax_Tree &tree);
 void show(const Node &T, int cont);
 void show(const Syntax_Tree &tree);
 
-template <class ADN>
-float watching_Ad(const Node &root, const ADN &solution,
+template <class Dna>
+float watching_Ad(const Node &root, const Dna &solution,
                   const std::vector<float> &probabilities) {
   if (root.indep.size() > 0) {
     float prod = 1;
@@ -136,16 +135,16 @@ float watching_Ad(const Node &root, const ADN &solution,
   return -1;
 }
 
-template <class ADN>
-float watching_Ad(const Syntax_Tree &tree, const ADN &solution,
+template <class Dna>
+float watching_Ad(const Syntax_Tree &tree, const Dna &solution,
                   const std::vector<float> &probabilities) {
   assert(tree.root != nullptr);
   return watching_Ad(*tree.root, solution, probabilities);
 }
 
-template <class ADN>
+template <class Dna>
 bool prob_consis(const Node &nod, const std::vector<float> &prob,
-                 const ADN &solution) {
+                 const Dna &solution) {
   if (nod.indep.size() > 0) {
     bool T = true;
     for (auto &&term : nod.indep) {
@@ -155,7 +154,6 @@ bool prob_consis(const Node &nod, const std::vector<float> &prob,
   }
   
   if (nod.excl.size() > 0) {
-    //bool T = true;
     bool T = watching_Ad(nod, solution, prob);
     for (auto &&term : nod.excl) {
       T = T && prob_consis(*term, prob, solution);
@@ -172,9 +170,9 @@ bool prob_consis(const Node &nod, const std::vector<float> &prob,
   }
 }
 
-template <class ADN>
+template <class Dna>
 bool prob_consis(const Syntax_Tree &term, const std::vector<float> &prob,
-                 const ADN &solution) {
+                 const Dna &solution) {
   return prob_consis(*term.root, prob, solution);
 }
 

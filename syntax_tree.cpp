@@ -10,9 +10,9 @@
 // Node implementation ---------------------------------------------------------
 
 Node::Node()
-    : indep(std::vector<std::shared_ptr<Node>>(0)),
-      excl(std::vector<std::shared_ptr<Node>>(0)),
-      incl(std::vector<std::shared_ptr<Node>>(0)), event_id(-1) {}
+    : indep(std::vector< std::shared_ptr<Node> >(0)),
+      excl(std::vector< std::shared_ptr<Node> >(0)),
+      incl(std::vector< std::shared_ptr<Node> >(0)), event_id(-1) {}
 
 Node::Node(const Node &nod) {
   this->indep = nod.indep;
@@ -22,9 +22,9 @@ Node::Node(const Node &nod) {
 }
 
 Node::Node(int _event_id)
-    : indep(std::vector<std::shared_ptr<Node>>(0)),
-      excl(std::vector<std::shared_ptr<Node>>(0)),
-      incl(std::vector<std::shared_ptr<Node>>(0)), event_id(_event_id) {}
+    : indep(std::vector< std::shared_ptr<Node> >(0)),
+      excl(std::vector< std::shared_ptr<Node> >(0)),
+      incl(std::vector< std::shared_ptr<Node> >(0)), event_id(_event_id) {}
 
 Node &Node::operator=(const Node &nod) {
   this->indep = nod.indep;
@@ -40,15 +40,15 @@ Node::~Node() {
   this->incl.clear();
 }
 
-void Node::set_incl(const std::vector<std::shared_ptr<Node>> &vec) {
+void Node::set_incl(const std::vector< std::shared_ptr<Node> > &vec) {
   this->incl = vec;
 }
 
-void Node::set_excl(const std::vector<std::shared_ptr<Node>> &vec) {
+void Node::set_excl(const std::vector< std::shared_ptr<Node> > &vec) {
   this->excl = vec;
 }
 
-void Node::set_indep(const std::vector<std::shared_ptr<Node>> &vec) {
+void Node::set_indep(const std::vector< std::shared_ptr<Node> > &vec) {
   this->indep = vec;
 }
 
@@ -140,15 +140,15 @@ bool operator!=(const Syntax_Tree &tree1, const Syntax_Tree &tree2) {
   return !(tree1 == tree2);
 }
 
-void Syntax_Tree::set_incl(const std::vector<std::shared_ptr<Node> > &vec) {
+void Syntax_Tree::set_incl(const std::vector< std::shared_ptr<Node> > &vec) {
   this->root->set_incl(vec);
 }
 
-void Syntax_Tree::set_excl(const std::vector<std::shared_ptr<Node> > &vec) {
+void Syntax_Tree::set_excl(const std::vector< std::shared_ptr<Node> > &vec) {
   this->root->set_excl(vec);
 }
 
-void Syntax_Tree::set_indep(const std::vector<std::shared_ptr<Node> > &vec) {
+void Syntax_Tree::set_indep(const std::vector< std::shared_ptr<Node> > &vec) {
   this->root->set_indep(vec);
 }
 

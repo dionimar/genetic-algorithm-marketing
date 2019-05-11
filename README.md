@@ -7,3 +7,22 @@ We can distingish two main problems: one is based on average views for each popu
 
 This is intended to be a general purpose genetic algorithm, but it is a little bit tunned to solve the particular problems described above. It is all implemented in C++ languaje, without any external library. 
 
+## Usage
+
+If you want the algorithm solve an specific problem you must implement a fitness function for Dna class. It has to be a Dna member function, marked as const, as in the next example:
+
+```cpp
+template <class T, class CrossOp, class MutOp>
+void Dna<T, CrossOp, MutOp>::comp_fitness() const {
+  // Your big computation task
+}
+```
+
+Dna class is parametrized by three classes:
+* T: representation type. Now only supports vector types, if you want to add other custom types you have to rewrite the code for your purposes.
+* CrossOp: crossover operator, defined in *algorithms.hpp*.
+* MutOp: mutation operator, defined in *algorithms.hpp*.
+
+
+The three classes decribed above determine Dna behaviour.
+

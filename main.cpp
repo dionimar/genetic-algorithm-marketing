@@ -3,8 +3,8 @@
 #include <random>
 #include <stdio.h>
 #include <stdlib.h>
-#include <vector>
 #include <thread>
+#include <vector>
 
 #include "adn.hpp"
 #include "config.hpp"
@@ -15,7 +15,6 @@
 #ifdef TESTING
 #include "testing.hpp"
 #endif
-
 
 int main(int argc, char **argv) {
 
@@ -29,8 +28,15 @@ int main(int argc, char **argv) {
 #ifdef TESTING
   test_group();
 #else
-  typedef Dna<std::vector<bool>, UniformCrossover, RandomMutation> DnaType;
+
+#ifdef PAR
+  std::cout<<"Multithread enabled        [OK]"<<std::endl;
+  std::cout<<"Concurrency Level          [";
+  std::cout<<std::thread::hardware_concurrency()<<"]"<<std::endl;
+#endif
   
+  typedef Dna<std::vector<bool>, UniformCrossover, RandomMutation> DnaType;
+
   typedef Population<DnaType, StochasticSelection, qNNR> popul1;
   typedef Population<DnaType, ProportionalSelection, qNNR> popul2;
   typedef Population<DnaType, RandomSelection, StandardReplacement> popul3;
@@ -41,21 +47,21 @@ int main(int argc, char **argv) {
   auto pop2 = popul2(media, POPULATION_SIZE, POOL_SIZE, ELLITISTS);
   auto pop3 = popul3(media, POPULATION_SIZE, POOL_SIZE, ELLITISTS);
   auto pop4 = popul4(media, POPULATION_SIZE, POOL_SIZE, ELLITISTS);
-
+  
   pop1.evolve(MAX_ITERATIONS);
   pop2.evolve(MAX_ITERATIONS);
   pop3.evolve(MAX_ITERATIONS);
   pop4.evolve(MAX_ITERATIONS);
 
 #ifdef PAPO
-  auto x = greedy_papo(restrictions, min_impressions, prob);
+  // auto x = greedy_papo(restrictions, min_impressions, prob);
 #endif
 #ifdef APO
-  auto x = greedy_apo(media, restrictions, min_impressions, costs);
+  // auto x = greedy_apo(media, restrictions, min_impressions, costs);
 #endif
-  auto greedy_adn = Dna<std::vector<bool> >(x);
-  greedy_adn.comp_fitness();
-  greedy_adn.show_info();
+  // auto greedy_adn = Dna<std::vector<bool>>(x);
+  // greedy_adn.comp_fitness();
+  // greedy_adn.show_info();
 #endif
 
   return 0;

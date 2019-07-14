@@ -7,6 +7,7 @@
 #include <mutex>
 #include <thread>
 #include <vector>
+#include <omp.h>
 
 #include "algorithms.hpp"
 #include "config.hpp"
@@ -185,6 +186,8 @@ void Dna<T, CrossOp, MutOp>::comp_fitness() const {
   fitness = scalar_prod(costs, get_rep());
   auto computed_terms = std::vector<float>(restrictions.size());
 
+  #pragma omp parallel
+  #pragma parallel for
   for (size_t i = 0; i < restrictions.size(); i++) {
     computed_terms.at(i) = watching_Ad(restrictions.at(i), *this, prob.at(i));
   }
@@ -194,6 +197,7 @@ void Dna<T, CrossOp, MutOp>::comp_fitness() const {
 #ifdef USE_OF_INFINITY
     fitness = std::numeric_limits<float>::infinity();
 #else // Use bound
+    #pragma parallel for
     for (size_t i = 0; i < computed_terms.size(); i++) {
       if (computed_terms.at(i) < min_impressions.at(i)) {
         fitness += costs_bound *

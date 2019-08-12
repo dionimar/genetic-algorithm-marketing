@@ -1,0 +1,29 @@
+#ifndef PROBLEM_H
+#define PROBLEM_H
+#include <iostream>
+#include "syntax_tree.hpp"
+
+
+#define PAPO
+
+
+
+
+static const int media = 100;
+static const int segments = 1;
+
+
+static const std::vector<Syntax_Tree> events = {cons_event(0), cons_event(1), cons_event(2), cons_event(3), cons_event(4), cons_event(5), cons_event(6), cons_event(7), cons_event(8), cons_event(9), cons_event(10), cons_event(11), cons_event(12), cons_event(13), cons_event(14), cons_event(15), cons_event(16), cons_event(17), cons_event(18), cons_event(19), cons_event(20), cons_event(21), cons_event(22), cons_event(23), cons_event(24), cons_event(25), cons_event(26), cons_event(27), cons_event(28), cons_event(29), cons_event(30), cons_event(31), cons_event(32), cons_event(33), cons_event(34), cons_event(35), cons_event(36), cons_event(37), cons_event(38), cons_event(39), cons_event(40), cons_event(41), cons_event(42), cons_event(43), cons_event(44), cons_event(45), cons_event(46), cons_event(47), cons_event(48), cons_event(49), cons_event(50), cons_event(51), cons_event(52), cons_event(53), cons_event(54), cons_event(55), cons_event(56), cons_event(57), cons_event(58), cons_event(59), cons_event(60), cons_event(61), cons_event(62), cons_event(63), cons_event(64), cons_event(65), cons_event(66), cons_event(67), cons_event(68), cons_event(69), cons_event(70), cons_event(71), cons_event(72), cons_event(73), cons_event(74), cons_event(75), cons_event(76), cons_event(77), cons_event(78), cons_event(79), cons_event(80), cons_event(81), cons_event(82), cons_event(83), cons_event(84), cons_event(85), cons_event(86), cons_event(87), cons_event(88), cons_event(89), cons_event(90), cons_event(91), cons_event(92), cons_event(93), cons_event(94), cons_event(95), cons_event(96), cons_event(97), cons_event(98), cons_event(99)};
+
+static const std::vector<Syntax_Tree> restrictions = {cons_incl(cons_indep(cons_excl(cons_excl(cons_excl(events[26], events[82]),events[63]),events[11]),events[59]),events[79])};
+
+
+static const std::vector< std::vector<float> > prob = {{0.322214, 0.175282, 0.611659, 0.841872, 0.71827, 0.980769, 0.477981, 0.252533, 0.161901, 0.912147, 0.144104, 0.287386, 0.951399, 0.503516, 0.231317, 0.294453, 0.836411, 0.952015, 0.781235, 0.400498, 0.304797, 0.852909, 0.919284, 0.988577, 0.302416, 0.36871, 0.857206, 0.0176941, 0.236023, 0.0060697, 0.646779, 0.187111, 0.976658, 0.671788, 0.137833, 0.233747, 0.632236, 0.169563, 0.441416, 0.900979, 0.125565, 0.328751, 0.502555, 0.793259, 0.642703, 0.456292, 0.627896, 0.0106801, 0.722453, 0.153989, 0.667028, 0.84077, 0.919964, 0.621601, 0.124695, 0.536166, 0.316099, 0.99458, 0.33349, 0.903138, 0.889292, 0.284419, 0.678515, 0.774752, 0.589982, 0.39542, 0.382132, 0.0506493, 0.114422, 0.396709, 0.66828, 0.093102, 0.0989678, 0.871578, 0.0728792, 0.935433, 0.412536, 0.313991, 0.0490903, 0.958253, 0.826613, 0.475608, 0.461497, 0.815303, 0.855074, 0.734772, 0.251353, 0.90317, 0.64551, 0.929452, 0.0446056, 0.44561, 0.368148, 0.604071, 0.136063, 0.317545, 0.826761, 0.50329, 0.068078, 0.102052},
+};
+
+static const std::vector<float> costs = {884.126, 828.179, 771.087, 740.932, 691.79, 828.648, 930.064, 655.731, 503.502, 318.003, 587.602, 827.89, 737.616, 785.317, 655.83, 798.912, 717.791, 183.523, 964.857, 512.787, 486.39, 371.48, 521.185, 831.068, 344.978, 660.463, 494.525, 381.243, 357.992, 825.246, 817.206, 56.8454, 582.399, 654.827, 818.972, 164.769, 319.482, 666.373, 622.918, 354.517, 666.205, 973.745, 935.455, 577.479, 810.892, 181.35, 667.404, 207.013, 703.233, 776.611, 952.731, 208.029, 739.027, 406.57, 961.019, 54.3344, 450.437, 813.715, 822.279, 278.141, 899.972, 775.65, 335.559, 863.455, 146.249, 99.8626, 870.591, 545.042, 5.36949, 909.198, 646.067, 988.457, 932.178, 662.596, 710.193, 961.968, 293.757, 242.713, 532.567, 658.403, 993.767, 496.178, 38.1049, 835.543, 752.198, 724.436, 515.321, 985.653, 248.637, 681.246, 410.562, 389.819, 12.2815, 897.274, 485.311, 202.199, 242.777, 408.233, 575.88, 812.613};
+
+static const std::vector<float> min_impressions = {0.844748};
+
+//
+#endif

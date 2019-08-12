@@ -1,0 +1,29 @@
+#ifndef PROBLEM_H
+#define PROBLEM_H
+#include <iostream>
+#include "syntax_tree.hpp"
+
+
+#define PAPO
+
+
+
+
+static const int media = 100;
+static const int segments = 1;
+
+
+static const std::vector<Syntax_Tree> events = {cons_event(0), cons_event(1), cons_event(2), cons_event(3), cons_event(4), cons_event(5), cons_event(6), cons_event(7), cons_event(8), cons_event(9), cons_event(10), cons_event(11), cons_event(12), cons_event(13), cons_event(14), cons_event(15), cons_event(16), cons_event(17), cons_event(18), cons_event(19), cons_event(20), cons_event(21), cons_event(22), cons_event(23), cons_event(24), cons_event(25), cons_event(26), cons_event(27), cons_event(28), cons_event(29), cons_event(30), cons_event(31), cons_event(32), cons_event(33), cons_event(34), cons_event(35), cons_event(36), cons_event(37), cons_event(38), cons_event(39), cons_event(40), cons_event(41), cons_event(42), cons_event(43), cons_event(44), cons_event(45), cons_event(46), cons_event(47), cons_event(48), cons_event(49), cons_event(50), cons_event(51), cons_event(52), cons_event(53), cons_event(54), cons_event(55), cons_event(56), cons_event(57), cons_event(58), cons_event(59), cons_event(60), cons_event(61), cons_event(62), cons_event(63), cons_event(64), cons_event(65), cons_event(66), cons_event(67), cons_event(68), cons_event(69), cons_event(70), cons_event(71), cons_event(72), cons_event(73), cons_event(74), cons_event(75), cons_event(76), cons_event(77), cons_event(78), cons_event(79), cons_event(80), cons_event(81), cons_event(82), cons_event(83), cons_event(84), cons_event(85), cons_event(86), cons_event(87), cons_event(88), cons_event(89), cons_event(90), cons_event(91), cons_event(92), cons_event(93), cons_event(94), cons_event(95), cons_event(96), cons_event(97), cons_event(98), cons_event(99)};
+
+static const std::vector<Syntax_Tree> restrictions = {cons_incl(cons_excl(cons_incl(cons_indep(cons_excl(events[79], events[68]),events[95]),events[0]),events[49]),events[71])};
+
+
+static const std::vector< std::vector<float> > prob = {{0.880112, 0.986317, 0.702034, 0.438736, 0.0603764, 0.453726, 0.224024, 0.969199, 0.797636, 0.825536, 0.838189, 0.842352, 0.73221, 0.290672, 0.432231, 0.53914, 0.289812, 0.717283, 0.309016, 0.0834338, 0.410365, 0.590497, 0.0158411, 0.245804, 0.468507, 0.607581, 0.524627, 0.116547, 0.67733, 0.665447, 0.686875, 0.145507, 0.558098, 0.512749, 0.252472, 0.428592, 0.664791, 0.479439, 0.195782, 0.00281256, 0.869423, 0.636971, 0.589667, 0.030237, 0.786018, 0.43879, 0.265938, 0.808561, 0.268541, 0.193061, 0.604858, 0.369106, 0.734449, 0.169945, 0.710357, 0.136351, 0.148959, 0.161395, 0.583944, 0.252635, 0.70858, 0.502878, 0.844447, 0.537282, 0.459869, 0.652528, 0.087185, 0.582808, 0.645003, 0.957747, 0.943634, 0.963479, 0.806316, 0.967352, 0.935269, 0.985021, 0.301176, 0.554056, 0.35134, 0.622116, 0.934341, 0.711564, 0.460273, 0.230889, 0.106055, 0.120426, 0.258402, 0.926501, 0.460438, 0.363614, 0.261799, 0.827865, 0.179404, 0.797327, 0.689888, 0.281656, 0.547985, 0.802691, 0.204862, 0.653758},
+};
+
+static const std::vector<float> costs = {933.883, 726.906, 179.753, 30.6585, 941.892, 890.793, 370.069, 452.477, 606.986, 165.451, 829.299, 327.384, 578.506, 172.464, 84.6178, 803.399, 868.037, 538.967, 144.345, 174.237, 801.748, 633.84, 436.507, 623.851, 492.142, 343.055, 78.4993, 325.951, 142.186, 468.876, 690.42, 520.545, 559.924, 168.813, 477.632, 257.421, 359.093, 817.624, 7.26377, 768.521, 678.285, 208.428, 750.053, 824.401, 876.046, 93.2662, 480.959, 935.279, 701.418, 553.132, 414.979, 641.356, 199.611, 257.449, 787.421, 649.768, 318.528, 477.221, 1.74737, 93.9504, 571.273, 252.14, 605.594, 892.03, 48.0422, 230.989, 775.602, 207.463, 209.117, 260.432, 916.295, 660.19, 465.769, 165.835, 948.857, 340.458, 655.631, 500.484, 497.656, 679.176, 62.7934, 897.914, 492.643, 795.537, 848.791, 126.339, 816.341, 205.999, 670.365, 163.72, 832.253, 816.716, 27.9524, 216.229, 973.687, 785.879, 674.752, 93.4995, 291.002, 395.162};
+
+static const std::vector<float> min_impressions = {0.20498};
+
+//
+#endif

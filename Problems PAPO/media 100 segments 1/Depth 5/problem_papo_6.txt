@@ -1,0 +1,29 @@
+#ifndef PROBLEM_H
+#define PROBLEM_H
+#include <iostream>
+#include "syntax_tree.hpp"
+
+
+#define PAPO
+
+
+
+
+static const int media = 100;
+static const int segments = 1;
+
+
+static const std::vector<Syntax_Tree> events = {cons_event(0), cons_event(1), cons_event(2), cons_event(3), cons_event(4), cons_event(5), cons_event(6), cons_event(7), cons_event(8), cons_event(9), cons_event(10), cons_event(11), cons_event(12), cons_event(13), cons_event(14), cons_event(15), cons_event(16), cons_event(17), cons_event(18), cons_event(19), cons_event(20), cons_event(21), cons_event(22), cons_event(23), cons_event(24), cons_event(25), cons_event(26), cons_event(27), cons_event(28), cons_event(29), cons_event(30), cons_event(31), cons_event(32), cons_event(33), cons_event(34), cons_event(35), cons_event(36), cons_event(37), cons_event(38), cons_event(39), cons_event(40), cons_event(41), cons_event(42), cons_event(43), cons_event(44), cons_event(45), cons_event(46), cons_event(47), cons_event(48), cons_event(49), cons_event(50), cons_event(51), cons_event(52), cons_event(53), cons_event(54), cons_event(55), cons_event(56), cons_event(57), cons_event(58), cons_event(59), cons_event(60), cons_event(61), cons_event(62), cons_event(63), cons_event(64), cons_event(65), cons_event(66), cons_event(67), cons_event(68), cons_event(69), cons_event(70), cons_event(71), cons_event(72), cons_event(73), cons_event(74), cons_event(75), cons_event(76), cons_event(77), cons_event(78), cons_event(79), cons_event(80), cons_event(81), cons_event(82), cons_event(83), cons_event(84), cons_event(85), cons_event(86), cons_event(87), cons_event(88), cons_event(89), cons_event(90), cons_event(91), cons_event(92), cons_event(93), cons_event(94), cons_event(95), cons_event(96), cons_event(97), cons_event(98), cons_event(99)};
+
+static const std::vector<Syntax_Tree> restrictions = {cons_incl(cons_indep(cons_excl(cons_excl(cons_excl(events[76], events[46]),events[35]),events[37]),events[24]),events[0])};
+
+
+static const std::vector< std::vector<float> > prob = {{0.514811, 0.51317, 0.439951, 0.496774, 0.941061, 0.466941, 0.700381, 0.738073, 0.878615, 0.901022, 0.110357, 0.483819, 0.836983, 0.509087, 0.302111, 0.216162, 0.787995, 0.295245, 0.99449, 0.0463871, 0.578693, 0.129971, 0.532285, 0.0423477, 0.857684, 0.58764, 0.791448, 0.47929, 0.988783, 0.242629, 0.35324, 0.35959, 0.494783, 0.471879, 0.28796, 0.376898, 0.70624, 0.29371, 0.856367, 0.775755, 0.790187, 0.123167, 0.0848031, 0.656516, 0.916931, 0.875882, 0.535675, 0.0506769, 0.737227, 0.808703, 0.264922, 0.438247, 0.911855, 0.101268, 0.565912, 0.989488, 0.367997, 0.404137, 0.442738, 0.561098, 0.000385302, 0.235998, 0.391931, 0.414224, 0.73341, 0.414508, 0.381266, 0.208858, 0.663498, 0.728372, 0.940432, 0.760278, 0.119568, 0.258351, 0.980804, 0.507154, 0.467408, 0.576513, 0.316139, 0.477726, 0.499808, 0.805693, 0.758739, 0.744856, 0.707118, 0.476547, 0.546645, 0.1933, 0.895542, 0.366534, 0.407322, 0.631799, 0.209538, 0.982198, 0.845502, 0.241155, 0.739607, 0.640473, 0.432085, 0.187829},
+};
+
+static const std::vector<float> costs = {292.71, 218.727, 818.191, 177.007, 600.249, 265.4, 945.063, 602.871, 345.104, 663.181, 101.073, 738.109, 216.275, 830.12, 723.711, 559.42, 849.187, 439.703, 971.494, 41.8967, 494.525, 446.97, 810.858, 979.072, 39.7939, 119.788, 742.076, 277.24, 543.872, 337.383, 852.314, 660.959, 294.346, 974.446, 901.833, 981.047, 785.741, 791.43, 277.256, 963.004, 373.886, 68.2756, 2.4956, 820.594, 914.903, 459.099, 789.984, 4.04419, 916.241, 224.817, 977.972, 522.135, 980.87, 139.319, 121.12, 151.047, 86.0244, 722.773, 818.685, 734.893, 769.496, 4.93742, 743.225, 510.7, 839.211, 363.127, 222.045, 377.852, 651.553, 919.28, 398.812, 696.535, 877.952, 29.1017, 71.1784, 6.89494, 119.852, 557.053, 263.23, 900.841, 248.585, 814.28, 224.724, 16.5572, 445.394, 130.834, 470.745, 142.137, 152.804, 600.572, 715.571, 974.351, 764.061, 763.441, 529.392, 916.384, 767.723, 818.557, 77.3845, 197.063};
+
+static const std::vector<float> min_impressions = {0.314033};
+
+//
+#endif

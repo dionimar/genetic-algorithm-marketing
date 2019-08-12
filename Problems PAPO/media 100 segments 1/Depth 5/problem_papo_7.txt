@@ -1,0 +1,29 @@
+#ifndef PROBLEM_H
+#define PROBLEM_H
+#include <iostream>
+#include "syntax_tree.hpp"
+
+
+#define PAPO
+
+
+
+
+static const int media = 100;
+static const int segments = 1;
+
+
+static const std::vector<Syntax_Tree> events = {cons_event(0), cons_event(1), cons_event(2), cons_event(3), cons_event(4), cons_event(5), cons_event(6), cons_event(7), cons_event(8), cons_event(9), cons_event(10), cons_event(11), cons_event(12), cons_event(13), cons_event(14), cons_event(15), cons_event(16), cons_event(17), cons_event(18), cons_event(19), cons_event(20), cons_event(21), cons_event(22), cons_event(23), cons_event(24), cons_event(25), cons_event(26), cons_event(27), cons_event(28), cons_event(29), cons_event(30), cons_event(31), cons_event(32), cons_event(33), cons_event(34), cons_event(35), cons_event(36), cons_event(37), cons_event(38), cons_event(39), cons_event(40), cons_event(41), cons_event(42), cons_event(43), cons_event(44), cons_event(45), cons_event(46), cons_event(47), cons_event(48), cons_event(49), cons_event(50), cons_event(51), cons_event(52), cons_event(53), cons_event(54), cons_event(55), cons_event(56), cons_event(57), cons_event(58), cons_event(59), cons_event(60), cons_event(61), cons_event(62), cons_event(63), cons_event(64), cons_event(65), cons_event(66), cons_event(67), cons_event(68), cons_event(69), cons_event(70), cons_event(71), cons_event(72), cons_event(73), cons_event(74), cons_event(75), cons_event(76), cons_event(77), cons_event(78), cons_event(79), cons_event(80), cons_event(81), cons_event(82), cons_event(83), cons_event(84), cons_event(85), cons_event(86), cons_event(87), cons_event(88), cons_event(89), cons_event(90), cons_event(91), cons_event(92), cons_event(93), cons_event(94), cons_event(95), cons_event(96), cons_event(97), cons_event(98), cons_event(99)};
+
+static const std::vector<Syntax_Tree> restrictions = {cons_indep(cons_indep(cons_indep(cons_indep(cons_indep(events[4], events[33]),events[29]),events[63]),events[45]),events[44])};
+
+
+static const std::vector< std::vector<float> > prob = {{0.255755, 0.262595, 0.447837, 0.549203, 0.872134, 0.79524, 0.914606, 0.356514, 0.0612989, 0.579187, 0.0972358, 0.485196, 0.207894, 0.610588, 0.592716, 0.520236, 0.053135, 0.0853951, 0.686671, 0.399989, 0.0629544, 0.832754, 0.924224, 0.378691, 0.155468, 0.130376, 0.899163, 0.977977, 0.979071, 0.893932, 0.272504, 0.156297, 0.87875, 0.29505, 0.940934, 0.0530223, 0.496507, 0.882188, 0.449394, 0.245285, 0.613766, 0.67767, 0.594269, 0.498676, 0.565749, 0.806238, 0.330588, 0.282533, 0.93176, 0.863076, 0.842701, 0.540312, 0.0421026, 0.228337, 0.566811, 0.39829, 0.0946678, 0.933975, 0.5993, 0.380357, 0.913154, 0.808393, 0.663593, 0.637945, 0.00362706, 0.880281, 0.380503, 0.381559, 0.732228, 0.681591, 0.359676, 0.705733, 0.51313, 0.258074, 0.154388, 0.45822, 0.146348, 0.941515, 0.588048, 0.527644, 0.114021, 0.550409, 0.806212, 0.197502, 0.30137, 0.014121, 0.846863, 0.0731214, 0.280293, 0.1762, 0.708813, 0.964985, 0.770194, 0.635415, 0.491538, 0.354557, 0.184024, 0.434758, 0.285203, 0.316767},
+};
+
+static const std::vector<float> costs = {418.036, 834.491, 821.256, 629.085, 761.657, 558.894, 695.408, 290.816, 641.662, 173.46, 83.2455, 681.368, 311.557, 384.485, 920.836, 297.886, 10.219, 759.505, 859.758, 330.04, 588.286, 622.189, 680.657, 930.657, 243.395, 562.022, 419.389, 645.006, 127.315, 38.6216, 709.082, 350.349, 252.235, 26.8646, 164.486, 87.0062, 957.976, 717.524, 754.802, 556.969, 188.978, 205.729, 748.939, 918.036, 911.075, 44.8062, 599.519, 629.176, 667.302, 348.596, 748.297, 235.244, 846.859, 803.81, 475.4, 673.23, 299.026, 212.455, 603.206, 154.328, 930.922, 46.3392, 585.477, 649.864, 121.312, 969.452, 160.362, 508.22, 469.248, 472.618, 256.622, 277.839, 543.811, 49.1908, 640.667, 606.32, 133.538, 420.55, 222.325, 76.3116, 236.214, 672.039, 784.133, 486.232, 764.485, 698.587, 186.565, 368.567, 971.585, 745.884, 575.751, 639.398, 621.771, 5.73854, 632.52, 524.777, 365.453, 834.655, 693.347, 594.097};
+
+static const std::vector<float> min_impressions = {0.668465};
+
+//
+#endif

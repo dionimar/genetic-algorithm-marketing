@@ -121,15 +121,6 @@ std::vector<bool> greedy_apo(const int n, const Matrix &mat,
         M[i][j] = std::min(M[i][j], to_cover.at(i));
       }
     }
-    
-    // for (auto &&elem : to_cover) {
-    //   std::cout << elem << " ";
-    // }
-    // std::cout << std::endl;
-    // for(auto&& xi : x){
-    //   std::cout<<xi;
-    // }
-    std::cout<<std::endl;
   }
   return x;
 }

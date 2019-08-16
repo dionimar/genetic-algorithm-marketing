@@ -22,7 +22,7 @@
 #define POPULATION_SIZE 200
 #define POOL_SIZE 200
 #define ELLITISTS 20 // Number of individuals to keep for next generation
-#define MAX_ITERATIONS 50
+#define MAX_ITERATIONS 250
 
 #define PRINT(a) P(a)
 #define P(a) #a

@@ -9,7 +9,6 @@
 #include <mutex>
 #include <thread>
 #include <vector>
-//#include <omp.h>
 
 #include "adn.hpp"
 #include "algorithms.hpp"
@@ -170,7 +169,6 @@ public:
   }
 
   void next_generation() {
-    //#pragma omp parallel
     SelectOp::construct_pool(*this);
     // partial sort if ellitism is selected; we need to avoid
     // replacement over this members

@@ -416,7 +416,8 @@ StochasticSelection::selection(Pop &p) {
 }
 
 template <class Pop>
-void StandardReplacement::replace(decltype(Pop::memb_type) &member, Pop &p,
+void StandardReplacement::replace(decltype(Pop::memb_type) &member,
+				  Pop &p,
                                   int k) {
   p.at(k) = member;
 }
